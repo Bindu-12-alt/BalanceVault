@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="BalanceVault icon">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00c4b4"/>
+      <stop offset="100%" stop-color="#1a3a5c"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+  <path d="M19 22.5h8.5c7.7 0 13.5 3.7 13.5 10.2 0 6.8-5.8 10.3-13.5 10.3H19V22.5zm8.5 14.4c4.2 0 7.2-1.7 7.2-4.2 0-2.5-3-4.1-7.2-4.1H24v8.3h3.5zM33.4 40H45l5.3 4.5H33.4V40z" fill="#ffffff" fill-rule="evenodd"/>
+</svg>
