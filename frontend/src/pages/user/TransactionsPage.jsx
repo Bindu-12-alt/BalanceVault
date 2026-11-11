@@ -3,7 +3,7 @@ import { accountsAPI } from '../../services/api';
 import { formatCurrency, formatDateTime, txBadgeClass, getErrorMessage } from '../../utils/format';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import Alert from '../../components/common/Alert';
-import { TransferIcon, HistoryIcon } from '../../components/common/Icons';
+import { TransferIcon } from '../../components/common/Icons';
 
 export default function TransactionsPage() {
   const [accounts, setAccounts] = useState([]);

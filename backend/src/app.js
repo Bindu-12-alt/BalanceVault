@@ -39,7 +39,10 @@ app.use(helmet({
 // --- CORS ---
 app.use(cors({
   origin: (origin, callback) => {
-    const allowed = [config.frontendUrl, 'http://localhost:5173', 'http://localhost:3000'];
+    const allowed = [config.frontendUrl];
+    if (config.isDevelopment) {
+      allowed.push('http://localhost:5173', 'http://localhost:3000');
+    }
     if (!origin || allowed.includes(origin)) {
       callback(null, true);
     } else {

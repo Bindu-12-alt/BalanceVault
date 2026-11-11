@@ -1,6 +1,6 @@
 'use strict';
 const { getPrismaClient } = require('../config/database');
-const { ConflictError, NotFoundError, AuthorizationError, ValidationError } = require('../utils/errors');
+const { ConflictError, NotFoundError } = require('../utils/errors');
 
 const prisma = () => getPrismaClient();
 

@@ -3,8 +3,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import {
   DashboardIcon, AccountsIcon, TransferIcon, HistoryIcon, ProfileIcon,
-  OnboardingIcon, UsersIcon, ShieldIcon, LedgerIcon, AuditIcon,
-  StatsIcon, BankIcon, LogoutIcon, MenuIcon, XIcon,
+  OnboardingIcon, UsersIcon, LedgerIcon, AuditIcon,
+  StatsIcon, LogoutIcon, XIcon,
 } from './Icons';
 
 const NavItem = ({ to, icon: Icon, label, badge, onClick }) => (

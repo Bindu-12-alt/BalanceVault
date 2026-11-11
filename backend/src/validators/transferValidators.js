@@ -1,5 +1,5 @@
 'use strict';
-const { body, param } = require('express-validator');
+const { body } = require('express-validator');
 
 const transferValidators = [
   body('fromAccountId').trim().notEmpty().withMessage('Source account ID is required'),
@@ -25,7 +25,7 @@ const transferValidators = [
     .trim()
     .isLength({ min: 8, max: 128 })
     .withMessage('Idempotency key required (8-128 chars)')
-    .matches(/^[a-zA-Z0-9_\-]+$/)
+    .matches(/^[a-zA-Z0-9_-]+$/)
     .withMessage('Idempotency key must be alphanumeric with - or _'),
 ];
 

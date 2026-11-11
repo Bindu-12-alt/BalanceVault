@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { formatDate, onboardingBadgeClass } from '../../utils/format';
-import { ProfileIcon, ShieldIcon } from '../../components/common/Icons';
+import { ShieldIcon } from '../../components/common/Icons';
 
 export default function ProfilePage() {
   const { user } = useAuth();

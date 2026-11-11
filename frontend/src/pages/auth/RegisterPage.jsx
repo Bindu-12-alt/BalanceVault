@@ -15,8 +15,6 @@ const PasswordStrength = ({ password }) => {
   ];
   const score = checks.filter((c) => c.ok).length;
   const colors = ['', '#ef4444', '#f59e0b', '#3b82f6', '#10b981'];
-  const labels = ['', 'Weak', 'Fair', 'Good', 'Strong'];
-
   if (!password) return null;
   return (
     <div style={{ marginTop: '0.6rem' }}>

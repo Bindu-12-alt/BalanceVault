@@ -55,7 +55,7 @@ BalanceVault/
 ## Local Setup
 
 ### Prerequisites
-- Node.js 18+
+- Node.js 22+
 - PostgreSQL (local or Neon)
 - Redis (optional — rate limiting falls back to memory without it)
 
@@ -217,24 +217,13 @@ GET  /ledger/verify              — Run ledger integrity check
 
 ## Running Tests
 
-Use a PostgreSQL database for the app and a separate test database (or reuse the same one) for Jest:
+Use a dedicated PostgreSQL database for Jest. Tests run migrations and the teardown deletes test data; the test setup refuses to run without `TEST_DATABASE_URL` and rejects it if it points to the same database as `DATABASE_URL`.
 
 ```bash
-# Optional but recommended for CI/local test isolation
+# Configure a separate database before running tests
 TEST_DATABASE_URL="postgresql://postgres:YOUR_PASSWORD@localhost:5432/balancevault_test?sslmode=disable"
 
 cd backend
-npm test
-```
-
-If `TEST_DATABASE_URL` is not set, the test setup automatically falls back to `DATABASE_URL`.
-
-```bash
-cd backend
-
-# In .env or test environment
-# TEST_DATABASE_URL=postgresql://...test_db...
-
 npm test
 ```
 
@@ -292,26 +281,15 @@ Tests cover:
 
 ## Deployment
 
-### Backend (Render)
+The repository includes a Render Blueprint in `render.yaml` for the API and a Vercel SPA rewrite in `frontend/vercel.json`. Provision your PostgreSQL database and deploy in this order:
 
-1. Create a new **Web Service** on Render
-2. Set build command: `npm install && npx prisma generate && npx prisma migrate deploy`
-3. Set start command: `npm start`
-4. Add all environment variables from `.env.example`
-5. Use **Neon PostgreSQL** as the database
+1. Create a PostgreSQL database (for example, on Neon) and deploy this repository's Render Blueprint. Set `DATABASE_URL`, `JWT_SECRET`, `JWT_REFRESH_SECRET`, and `FRONTEND_URL` in the Render service environment. Generate two independent, high-entropy JWT secrets; never reuse development or example values.
+2. The Render build generates Prisma Client and applies checked-in migrations before starting the API. Render uses `/ready` as its health check. Set `REDIS_URL` to a managed Redis instance for shared rate limits when running multiple backend instances.
+3. Create a Vercel project with the `frontend/` directory as its root and set `VITE_API_BASE_URL` to `https://<your-api-host>/api/v1`. The rewrite configuration supports client-side routes on refresh.
+4. Set `FRONTEND_URL` to the exact deployed frontend origin (scheme and hostname, no path), then deploy both services and verify `/health`, `/ready`, login, and core workflows.
+5. Keep `ADMIN_BOOTSTRAP_ENABLED=false` except for a controlled first-admin bootstrap. Do not run `npm run seed` against production; it creates demo accounts.
 
-### Frontend (Vercel)
-
-1. Import the `frontend/` directory into Vercel
-2. Set `VITE_API_BASE_URL` to your Render backend URL
-3. Framework preset: **Vite**
-
-### Database (Neon)
-
-1. Create a project at [neon.tech](https://neon.tech)
-2. Copy the connection string to `DATABASE_URL`
-3. Run `npx prisma migrate deploy` to apply schema
-4. Run `npm run seed` to load demo data
+Use staging and a separate database before production. Back up the database and verify your provider's restore procedure before handling real user data. Run Jest only with a dedicated `TEST_DATABASE_URL`; tests migrate and delete data from that database.
 
 ---
 

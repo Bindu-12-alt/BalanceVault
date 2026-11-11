@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "BalanceVault TrustLedger – Secure financial account management backend",
   "main": "src/server.js",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
@@ -12,11 +15,11 @@
     "seed": "node prisma/seed.js",
     "test": "jest --forceExit --detectOpenHandles",
     "test:coverage": "jest --coverage --forceExit --detectOpenHandles",
-    "lint": "eslint src/**/*.js"
+    "lint": "eslint src"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
-    "bcrypt": "^5.1.1",
+    "bcrypt": "^6.0.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -28,11 +31,14 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "rate-limit-redis": "^4.2.0",
-    "uuid": "^10.0.0",
+    "uuid": "^11.1.1",
     "winston": "^3.17.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.13.0",
     "@types/jest": "^29.5.14",
+    "eslint": "^9.13.0",
+    "globals": "^15.11.0",
     "jest": "^29.7.0",
     "nodemon": "^3.1.7",
     "prisma": "^5.22.0",

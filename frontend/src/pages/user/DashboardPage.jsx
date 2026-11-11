@@ -74,7 +74,7 @@ export default function DashboardPage() {
       {/* Page header */}
       <div className="page-header">
         <h1>Dashboard</h1>
-        <p>Welcome back, {user?.firstName}! Here's your financial overview.</p>
+        <p>Welcome back, {user?.firstName}! Here&apos;s your financial overview.</p>
       </div>
 
       <Alert type="error" message={error} onClose={() => setError('')} />
@@ -99,7 +99,7 @@ export default function DashboardPage() {
           <div>
             <div style={{ fontWeight: 700, color: '#92400e', marginBottom: '0.3rem' }}>Application under review</div>
             <p style={{ color: '#78350f', fontSize: '0.875rem' }}>
-              Your KYC application is being reviewed by our team. You'll be notified once approved.
+              Your KYC application is being reviewed by our team. You&apos;ll be notified once approved.
             </p>
           </div>
         </div>

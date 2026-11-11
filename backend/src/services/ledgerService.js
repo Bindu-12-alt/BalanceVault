@@ -23,20 +23,16 @@ const verifyLedger = async () => {
   });
 
   let verifiedCount = 0;
-  let mismatchCount = 0;
-
   for (const tx of completedTransactions) {
     const debits = tx.ledgerEntries.filter((e) => e.entryType === 'DEBIT');
     const credits = tx.ledgerEntries.filter((e) => e.entryType === 'CREDIT');
 
     if (debits.length !== 1) {
       issues.push({ type: 'MISSING_OR_DUPLICATE_DEBIT', transactionId: tx.id, detail: `Expected 1 debit, found ${debits.length}` });
-      mismatchCount++;
       continue;
     }
     if (credits.length !== 1) {
       issues.push({ type: 'MISSING_OR_DUPLICATE_CREDIT', transactionId: tx.id, detail: `Expected 1 credit, found ${credits.length}` });
-      mismatchCount++;
       continue;
     }
 
@@ -45,20 +41,16 @@ const verifyLedger = async () => {
 
     if (debit.amount !== credit.amount) {
       issues.push({ type: 'AMOUNT_MISMATCH', transactionId: tx.id, detail: `Debit ${debit.amount} ≠ Credit ${credit.amount}` });
-      mismatchCount++;
     } else if (debit.amount !== tx.amount) {
       issues.push({ type: 'LEDGER_TX_AMOUNT_MISMATCH', transactionId: tx.id, detail: `Ledger amount ${debit.amount} ≠ Transaction amount ${tx.amount}` });
-      mismatchCount++;
     } else {
       // Balance continuity
       const debitContinuity = debit.balanceBefore - debit.amount === debit.balanceAfter;
       const creditContinuity = credit.balanceBefore + credit.amount === credit.balanceAfter;
       if (!debitContinuity) {
         issues.push({ type: 'DEBIT_BALANCE_CONTINUITY', transactionId: tx.id, detail: `Debit: before(${debit.balanceBefore}) - amount(${debit.amount}) ≠ after(${debit.balanceAfter})` });
-        mismatchCount++;
       } else if (!creditContinuity) {
         issues.push({ type: 'CREDIT_BALANCE_CONTINUITY', transactionId: tx.id, detail: `Credit: before(${credit.balanceBefore}) + amount(${credit.amount}) ≠ after(${credit.balanceAfter})` });
-        mismatchCount++;
       } else {
         verifiedCount++;
       }

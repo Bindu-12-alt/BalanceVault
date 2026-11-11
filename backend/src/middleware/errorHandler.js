@@ -8,7 +8,7 @@ const { error: errorResponse } = require('../utils/response');
  * Maps known error types to appropriate HTTP responses.
  * Never leaks stack traces or internal details in production.
  */
-const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, req, res, _next) => {
   const requestId = res.locals.requestId || req.requestId;
 
   // Log the error
@@ -64,7 +64,7 @@ const errorHandler = (err, req, res, next) => {
 };
 
 /** 404 handler for unmatched routes */
-const notFoundHandler = (req, res, next) => {
+const notFoundHandler = (req, res, _next) => {
   errorResponse(res, `Route ${req.method} ${req.path} not found`, 404, 'ROUTE_NOT_FOUND');
 };
 

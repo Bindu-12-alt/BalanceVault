@@ -7,8 +7,6 @@ const {
   InsufficientFundsError,
   AccountSuspendedError,
   TransferError,
-  IdempotencyError,
-  ValidationError,
 } = require('../utils/errors');
 const { recordAudit } = require('../middleware/auditLogger');
 

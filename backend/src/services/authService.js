@@ -6,7 +6,6 @@ const config = require('../config/env');
 const {
   ConflictError,
   AuthenticationError,
-  ValidationError,
 } = require('../utils/errors');
 
 const prisma = () => getPrismaClient();
